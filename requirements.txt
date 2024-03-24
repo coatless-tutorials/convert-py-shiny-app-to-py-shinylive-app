@@ -1,5 +1,2 @@
-wheel
-pandas
 shiny
-shinyswatch
 shinylive
