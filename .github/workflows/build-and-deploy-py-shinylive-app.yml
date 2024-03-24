@@ -34,7 +34,7 @@ jobs:
         # Install the dependencies for the py-shinylive app
         - name: "Setup Python dependency for Shinylive App export"
           shell: bash
-          run: pip install -r requirements.txt
+          run: pip install shinylive
   
         # Export the current working directory as the py-shiny app
         # using the version of the py-shinylive package
