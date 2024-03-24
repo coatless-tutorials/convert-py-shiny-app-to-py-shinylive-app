@@ -176,5 +176,5 @@ Moreover, you can view one of the deployment apps sizes here:
 That's it! You've successfully learned how to deploy a Python Shinylive app via GitHub Pages using GitHub Actions.
 
   [1]: https://i.imgur.com/lGkZNeM.png 
-  [2]: https://i.imgur.com/krmVxIF.png
-  [3]: https://i.imgur.com/xouALeM.png
+  [2]: https://i.imgur.com/xouALeM.png
+  [3]: https://i.imgur.com/krmVxIF.png
