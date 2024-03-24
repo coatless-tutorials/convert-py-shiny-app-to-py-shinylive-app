@@ -1,0 +1,59 @@
+on:
+    push:
+      branches: [main, master]
+    release:
+        types: [published]
+    workflow_dispatch: {}
+   
+name: demo-py-shinylive-app
+
+jobs:
+    build-and-deploy-py-shinylive-app:
+      runs-on: ubuntu-latest
+      # Only restrict concurrency for non-PR jobs
+      concurrency:
+        group: py-shinylive-website-${{ github.event_name != 'pull_request' || github.run_id }}
+      # Describe the permissions for obtain repository contents and 
+      # deploying a GitHub pages website for the repository
+      permissions:
+        contents: read
+        pages: write
+        id-token: write
+      steps:
+        # Obtain the contents of the repository
+        - name: "Check out repository"
+          uses: actions/checkout@v4
+
+        # Install Python on the GitHub Actions worker
+        - name: "Setup Python"
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.12'
+            cache: 'pip' # caching pip dependencies
+
+        # Install the dependencies for the py-shinylive app
+        - name: "Setup Python dependency for Shinylive App export"
+          shell: bash
+          run: pip install -r requirements.txt
+  
+        # Export the current working directory as the py-shiny app
+        # using the version of the py-shinylive package
+        - name: Create Python Shinylive App from working directory files
+          shell: bash
+          run: |
+           shinylive export . _site
+
+        # Upload a tar file that will work with GitHub Pages
+        # Make sure to set a retention day to avoid running into a cap
+        # This artifact shouldn't be required after deployment onto pages was a success.
+        - name: Upload Pages artifact
+          uses: actions/upload-pages-artifact@v2
+          with: 
+            retention-days: 1
+        
+        # Use an Action deploy to push the artifact onto GitHub Pages
+        # This requires the `Action` tab being structured to allow for deployment
+        # instead of using `docs/` or the `gh-pages` branch of the repository
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v2
