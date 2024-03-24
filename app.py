@@ -5,7 +5,7 @@ import pandas as pd
 # Define UI
 app_ui = ui.page_fluid(
     # Apply theme
-    shinyswatch.theme.flatly,
+    shinyswatch.theme.flatly(),
     
     # App title
     ui.h1("CSV File Uploader"),
