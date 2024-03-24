@@ -31,8 +31,6 @@ def server(input, output, session):
     def file_data():
         req(input.data_file())
         data_file_infos = input.data_file()
-        print(data_file_infos)
-        print(input.header())
         df = pd.read_csv(
             data_file_infos[0]["datapath"],
             header = 'infer' if input.header() == True else None )
